@@ -1,0 +1,20 @@
+#include <iostream>
+#include <stdio.h>
+
+
+using namespace std;
+
+
+int main()
+{
+	int year;
+	char addr[80];
+	printf("input year\n");
+	cin >> year;
+  //cin.get();
+	
+	printf("input addr\n");
+	cin.getline(addr, 80);
+	printf("%s ", addr);
+	return 0;
+}
