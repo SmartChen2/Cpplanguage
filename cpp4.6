@@ -11,10 +11,28 @@ int main()
 	char addr[80];
 	printf("input year\n");
 	cin >> year;
-  //cin.get();
+  //cin.get(); uncommment it will make it work.
 	
 	printf("input addr\n");
 	cin.getline(addr, 80);
+	printf("%s ", addr);
+	return 0;
+}
+
+
+
+
+#include <stdio.h>
+
+int main()
+{
+	int year;
+	char addr[80];
+	printf("input year\n");
+	scanf("%d", &year);
+	
+	printf("input addr\n");
+	scanf("%s", addr);
 	printf("%s ", addr);
 	return 0;
 }
