@@ -1,0 +1,43 @@
+using namespace std;
+class Solution {
+public:
+    int ans = 0;
+    int a[4] = {0, 0, 1, -1};
+    int b[4] = {1, -1, 0, 0};
+    int numIslands(vector<vector<char>>& grid) {
+        int row = grid.size();
+        if (row == 0)  return 0;  
+        int col = grid[0].size();
+        if (col == 0)  return 0;
+        
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                bfs(grid, i, j, row, col);
+            }
+        }
+        
+        return ans;
+    }
+    void bfs(vector<vector<char>>& grid, int x, int y, int row, int col) {
+        if (grid[x][y] != '1')
+            return;
+        ans++;
+        queue<pair<int, int> > q;
+        q.push(pair(x, y));
+        while (!q.empty()) {
+            pair <int, int> pa = q.front();
+            q.pop();
+            
+            int x1 = pa.first;
+            int y1 = pa.second;
+            if (grid[x1][y1] != '1') continue;
+            grid[x1][y1] = '2';
+            for (int i = 0; i < 4; i++) {
+                int tx = x1 + a[i];
+                int ty = y1 + b[i];
+                if (tx < 0 || tx >= row || ty < 0 || ty >= col) continue;
+                q.push(pair(tx, ty));
+            }
+        }
+    }
+};
