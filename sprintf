@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        const int siz = 10;
+        int arr1[siz];
+        int arr2[siz];
+        fill(arr1, arr1 + siz, 0);
+        fill(arr2, arr2 + siz, 0);
+
+        int len = max(secret.size(), guess.size());
+        int A = 0, B = 0;
+        
+        for (int i = 0; i < len; i++) {
+            if (secret.at(i) == guess.at(i)) {
+                A++;
+            }
+            else {
+                arr1[(secret.at(i) - '0')]++;
+                arr2[(guess.at(i) - '0')]++;
+            }
+        }
+        for (int i = 0; i < siz; i++) {
+            B += min(arr1[i], arr2[i]);
+        }
+        char str[20];
+        sprintf(str, "%dA%dB", A, B);
+        return str;
+    }
+};
