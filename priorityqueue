@@ -1,0 +1,72 @@
+#include <cstdio>
+#include <algorithm>
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+typedef pair<int, int> P;
+const int SIZE = 101;
+const int INF = 10000000;
+
+int map[SIZE][SIZE];
+int d[SIZE];
+int N, M;
+int tempans = -1, tempid = -1, ansid = -1, ans = INF;
+
+void dij(int s) {
+	priority_queue<P, vector<P>, greater<P> > pq;
+	tempans = -1; tempid = s + 1;
+	d[s] = 0;
+	pq.push(P(0, s));
+	
+	while (!pq.empty()) {
+		P p = pq.top();
+		pq.pop();
+		int id = p.second, dis = p.first;
+		if (d[id] < dis) continue;
+		d[id] = min(d[id], dis);
+		for (int i = 0; i < N; i++) {
+			if (map[id][i] >= INF) continue;
+			if (map[id][i] + dis >= d[i]) continue;
+			pq.push(P(map[id][i] + dis, i));
+		}
+	}
+	
+	for (int i = 0; i < N; i++) {
+		if (tempans < d[i]) {
+			tempans = d[i];
+		}
+		if (d[i] == INF) {
+			tempid = -1;
+			return;
+		}
+	}
+}
+
+int main() {
+	cin >> N >> M;
+	fill(map[0], map[0] + SIZE * SIZE, INF);
+	for (int i = 0; i < M; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		a--; b--;
+		if (a == b) continue;
+		map[a][b] = map[b][a] = min(map[a][b], c);
+	}
+
+	for (int i = 0; i < N; i++) {
+		fill(d, d + N, INF);
+		dij(i);
+		if (tempid == -1) {
+			printf("0\n");
+			return 0;
+		}
+		if (ans > tempans) {
+			ans = tempans;
+			ansid = tempid;
+		}
+	}
+	printf("%d %d\n", ansid, ans);
+	
+	return 0;
+}
